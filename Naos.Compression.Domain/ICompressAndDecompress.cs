@@ -11,6 +11,10 @@ namespace Naos.Compression.Domain
     /// </summary>
     public interface ICompressAndDecompress : ICompress, IDecompress
     {
+        /// <summary>
+        /// Gets the kind of compression supported.
+        /// </summary>
+        CompressionKind Kind { get; }
     }
 
     /// <summary>
@@ -46,6 +50,9 @@ namespace Naos.Compression.Domain
     /// </summary>
     public class NullCompressor : ICompressAndDecompress
     {
+        /// <inheritdoc cref="ICompressAndDecompress"/>
+        public CompressionKind Kind => CompressionKind.None;
+
         /// <inheritdoc cref="ICompressAndDecompress"/>
         public byte[] CompressBytes(byte[] uncompressedBytes)
         {

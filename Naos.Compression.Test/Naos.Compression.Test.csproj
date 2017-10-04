@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include=".Naos.Recipes\InitializeTestProject\ExampleDummyFactory.cs" />
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
+    <Compile Include="CompressorFactoryTests.cs" />
     <Compile Include="DotNetZipCompressorTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

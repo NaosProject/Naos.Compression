@@ -6,16 +6,22 @@
 
 namespace Naos.Compression.Domain
 {
+    using System;
     using System.IO;
     using System.IO.Compression;
 
     using Spritely.Recipes;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Build in dot net implementation of <see cref="ICompressAndDecompress"/>.  Implementation from: <a href="https://stackoverflow.com/questions/40909052/using-gzip-to-compress-decompress-an-array-of-bytes" />
     /// </summary>
     public class DotNetZipCompressor : ICompressAndDecompress
     {
+        /// <inheritdoc cref="ICompressAndDecompress"/>
+        public CompressionKind Kind => CompressionKind.DotNetZip;
+
         /// <inheritdoc cref="ICompressAndDecompress"/>
         byte[] ICompress.CompressBytes(byte[] uncompressedBytes)
         {

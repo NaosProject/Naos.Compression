@@ -51,6 +51,8 @@
     <Compile Include=".Spritely.Recipes\MustValidation\RuleExtensions.cs" />
     <Compile Include=".Spritely.Recipes\MustValidation\Rules.cs" />
     <Compile Include=".Spritely.Recipes\MustValidation\ValidatedNotNullAttribute.cs" />
+    <Compile Include="CompressorFactory.cs" />
+    <Compile Include="CompressionKind.cs" />
     <Compile Include="DotNetZipCompressor.cs" />
     <Compile Include="ICompressAndDecompress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
