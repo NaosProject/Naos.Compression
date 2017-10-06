@@ -15,14 +15,22 @@ namespace Naos.Compression.Domain
     /// <summary>
     /// Get the correct <see cref="ICompressAndDecompress" /> implementation based on the kind.
     /// </summary>
-    public static class CompressorFactory
+    public class CompressorFactory : ICompressorFactory
     {
+        private static readonly CompressorFactory InternalInstance = new CompressorFactory();
+
         /// <summary>
-        /// Builds the correct <see cref="ICompressAndDecompress" /> implementation based on the kind.
+        /// Gets the singleton entry point to the code.
         /// </summary>
-        /// <param name="compressionKind">Kind of compression.</param>
-        /// <returns><see cref="ICompressAndDecompress" /> implementation based on the kind.</returns>
-        public static ICompressAndDecompress BuildCompressor(CompressionKind compressionKind)
+        public static ICompressorFactory Instance => InternalInstance;
+
+        private CompressorFactory()
+        {
+            /* no-op to make sure this can only be accessed via instance property */
+        }
+
+        /// <inheritdoc cref="ICompressorFactory" />
+        public ICompressAndDecompress BuildCompressor(CompressionKind compressionKind)
         {
             new { compressionKind }.Must().NotBeEqualTo(CompressionKind.Invalid).OrThrowFirstFailure();
 
@@ -33,5 +41,18 @@ namespace Naos.Compression.Domain
                 default: throw new NotSupportedException(Invariant($"{nameof(CompressionKind)} value {compressionKind} is not currently supported."));
             }
         }
+    }
+
+    /// <summary>
+    /// Abstract factory interface for building compressors.
+    /// </summary>
+    public interface ICompressorFactory
+    {
+        /// <summary>
+        /// Builds the correct <see cref="ICompressAndDecompress" /> implementation based on the kind.
+        /// </summary>
+        /// <param name="compressionKind">Kind of compression.</param>
+        /// <returns><see cref="ICompressAndDecompress" /> implementation based on the kind.</returns>
+        ICompressAndDecompress BuildCompressor(CompressionKind compressionKind);
     }
 }

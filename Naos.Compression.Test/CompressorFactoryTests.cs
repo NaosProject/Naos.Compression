@@ -21,7 +21,7 @@ namespace Naos.Compression.Test
         {
             // Arrange
             var kind = CompressionKind.Invalid;
-            Action action = () => CompressorFactory.BuildCompressor(kind);
+            Action action = () => CompressorFactory.Instance.BuildCompressor(kind);
 
             // Act
             var exception = Record.Exception(action);
@@ -40,7 +40,7 @@ namespace Naos.Compression.Test
             var expectedType = typeof(NullCompressor);
 
             // Act
-            var actual = CompressorFactory.BuildCompressor(kind);
+            var actual = CompressorFactory.Instance.BuildCompressor(kind);
 
             // Assert
             actual.Should().NotBeNull();
@@ -56,7 +56,7 @@ namespace Naos.Compression.Test
             var expectedType = typeof(DotNetZipCompressor);
 
             // Act
-            var actual = CompressorFactory.BuildCompressor(kind);
+            var actual = CompressorFactory.Instance.BuildCompressor(kind);
 
             // Assert
             actual.Should().NotBeNull();
