@@ -11,6 +11,13 @@ namespace Naos.Compression.Domain
     /// </summary>
     public interface ICompressAndDecompress : ICompress, IDecompress
     {
+    }
+
+    /// <summary>
+    /// Interface to expose the <see cref="CompressionKind" />.
+    /// </summary>
+    public interface IHaveCompressionKind
+    {
         /// <summary>
         /// Gets the kind of compression supported.
         /// </summary>
@@ -20,7 +27,7 @@ namespace Naos.Compression.Domain
     /// <summary>
     /// Interface to compress.
     /// </summary>
-    public interface ICompress
+    public interface ICompress : IHaveCompressionKind
     {
         /// <summary>
         /// Compresses the provided byte array.
@@ -34,7 +41,7 @@ namespace Naos.Compression.Domain
     /// <summary>
     /// Interface to decompress.
     /// </summary>
-    public interface IDecompress
+    public interface IDecompress : IHaveCompressionKind
     {
         /// <summary>
         /// Decompresses the provided byte array.
