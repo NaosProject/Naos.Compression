@@ -45,7 +45,7 @@ namespace Naos.Compression.Test
             // Assert
             actual.Should().NotBeNull();
             actual.Should().BeOfType(expectedType);
-            actual.Kind.Should().Be(kind);
+            actual.CompressionKind.Should().Be(kind);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Naos.Compression.Test
             // Assert
             actual.Should().NotBeNull();
             actual.Should().BeOfType(expectedType);
-            actual.Kind.Should().Be(kind);
+            actual.CompressionKind.Should().Be(kind);
         }
     }
 }

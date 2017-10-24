@@ -20,7 +20,7 @@ namespace Naos.Compression.Domain
     public class DotNetZipCompressor : ICompressAndDecompress
     {
         /// <inheritdoc cref="ICompressAndDecompress"/>
-        public CompressionKind Kind => CompressionKind.DotNetZip;
+        public CompressionKind CompressionKind => CompressionKind.DotNetZip;
 
         /// <inheritdoc cref="ICompressAndDecompress"/>
         byte[] ICompress.CompressBytes(byte[] uncompressedBytes)
