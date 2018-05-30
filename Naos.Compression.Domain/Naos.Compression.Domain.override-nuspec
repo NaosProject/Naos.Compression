@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>Compression logic for use with Naos asset, basic wrapper around the System.IO.Compression.GZipStream with interfaces to leverage additional compression algorithms.</description>
+  </metadata>
+</package>

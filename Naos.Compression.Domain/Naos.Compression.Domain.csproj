@@ -61,6 +61,7 @@
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
+    <None Include="Naos.Compression.Domain.override-nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
