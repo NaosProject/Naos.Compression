@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ExampleDummyFactory.cs" company="Naos">
 //   Copyright 2015 Naos
 // </copyright>
@@ -7,7 +7,7 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Naos.Recipes.InitializeTestProject
+namespace Naos.Compression.Test
 {
     using System;
     using System.Collections.Generic;

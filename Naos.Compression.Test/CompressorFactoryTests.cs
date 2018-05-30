@@ -28,8 +28,8 @@ namespace Naos.Compression.Test
 
             // Assert
             exception.Should().NotBeNull();
-            exception.Should().BeOfType<ArgumentException>();
-            exception.Message.Should().Be("Value must not be equal to Invalid.\r\nParameter name: compressionKind");
+            exception.Should().BeOfType<ArgumentOutOfRangeException>();
+            exception.Message.Should().Be("parameter 'compressionKind' is not equal to the comparison value, using EqualityComparer<T>.Default");
         }
 
         [Fact]

@@ -32,7 +32,7 @@ namespace Naos.Compression.Test
             // Assert
             exception.Should().NotBeNull();
             exception.Should().BeOfType<ArgumentNullException>();
-            exception.Message.Should().Be("\r\nParameter name: uncompressedBytes");
+            exception.Message.Should().Be("parameter 'uncompressedBytes' is null");
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Naos.Compression.Test
             // Assert
             exception.Should().NotBeNull();
             exception.Should().BeOfType<ArgumentNullException>();
-            exception.Message.Should().Be("\r\nParameter name: compressedBytes");
+            exception.Message.Should().Be("parameter 'compressedBytes' is null");
         }
 
         [Fact]

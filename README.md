@@ -2,4 +2,4 @@
 
 Naos.Compression
 ===============
-Compression logic for use with Naos assets.
+Compression logic for use with Naos assets.  Basic wrapper around the System.IO.Compression.GZipStream with interfaces to leverage additional compression algorithms.

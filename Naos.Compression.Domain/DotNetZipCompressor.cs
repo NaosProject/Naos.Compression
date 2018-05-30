@@ -6,26 +6,23 @@
 
 namespace Naos.Compression.Domain
 {
-    using System;
     using System.IO;
     using System.IO.Compression;
 
-    using Spritely.Recipes;
-
-    using static System.FormattableString;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Build in dot net implementation of <see cref="ICompressAndDecompress"/>.  Implementation from: <a href="https://stackoverflow.com/questions/40909052/using-gzip-to-compress-decompress-an-array-of-bytes" />
     /// </summary>
     public class DotNetZipCompressor : ICompressAndDecompress
     {
-        /// <inheritdoc cref="ICompressAndDecompress"/>
+        /// <inheritdoc />
         public CompressionKind CompressionKind => CompressionKind.DotNetZip;
 
-        /// <inheritdoc cref="ICompressAndDecompress"/>
+        /// <inheritdoc />
         byte[] ICompress.CompressBytes(byte[] uncompressedBytes)
         {
-            new { uncompressedBytes }.Must().NotBeNull().OrThrow();
+            new { uncompressedBytes }.Must().NotBeNull();
 
             return CompressBytes(uncompressedBytes);
         }
@@ -40,7 +37,7 @@ namespace Naos.Compression.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:Identifiers should not contain type names", Justification = "I like this name...")]
         public static byte[] CompressBytes(byte[] uncompressedBytes)
         {
-            new { uncompressedBytes }.Must().NotBeNull().OrThrow();
+            new { uncompressedBytes }.Must().NotBeNull();
 
             byte[] compressedBytes = null;
             using (var compressedStream = new MemoryStream())
@@ -56,10 +53,10 @@ namespace Naos.Compression.Domain
             return compressedBytes;
         }
 
-        /// <inheritdoc cref="ICompressAndDecompress"/>
+        /// <inheritdoc />
         byte[] IDecompress.DecompressBytes(byte[] compressedBytes)
         {
-            new { compressedBytes }.Must().NotBeNull().OrThrow();
+            new { compressedBytes }.Must().NotBeNull();
 
             return DecompressBytes(compressedBytes);
         }
@@ -74,7 +71,7 @@ namespace Naos.Compression.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:Identifiers should not contain type names", Justification = "I like this name...")]
         public static byte[] DecompressBytes(byte[] compressedBytes)
         {
-            new { compressedBytes }.Must().NotBeNull().OrThrow();
+            new { compressedBytes }.Must().NotBeNull();
 
             byte[] decompressedBytes = null;
 

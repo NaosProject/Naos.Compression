@@ -8,7 +8,7 @@ namespace Naos.Compression.Domain
 {
     using System;
 
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -29,10 +29,10 @@ namespace Naos.Compression.Domain
             /* no-op to make sure this can only be accessed via instance property */
         }
 
-        /// <inheritdoc cref="ICompressorFactory" />
+        /// <inheritdoc />
         public ICompressAndDecompress BuildCompressor(CompressionKind compressionKind)
         {
-            new { compressionKind }.Must().NotBeEqualTo(CompressionKind.Invalid).OrThrowFirstFailure();
+            new { compressionKind }.Must().NotBeEqualTo(CompressionKind.Invalid);
 
             switch (compressionKind)
             {
