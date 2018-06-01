@@ -27,11 +27,6 @@ namespace OBeautifulCode.Validation.Recipes
 #endif
         static class ParameterValidator
     {
-        /// <summary>
-        /// Exception message that's thrown when there is an improper usage of the framework.
-        /// </summary>
-        public const string ImproperUseOfFrameworkExceptionMessage = "The parameter validation framework is being used improperly.  See: https://github.com/OBeautifulCode/OBeautifulCode.Validation for documentation on proper usage.";
-
         private static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("CSharp");
 
         /// <summary>
@@ -239,7 +234,7 @@ namespace OBeautifulCode.Validation.Recipes
             //   - if parameter != null then the user doesn't understand how the framework is designed to be used
             //     and what the framework's limiations are.  Some negative outcome might occur (throwing when
             //     not expected or not throwing when expected).
-            message = message == null ? ImproperUseOfFrameworkExceptionMessage : message + "  " + ImproperUseOfFrameworkExceptionMessage;
+            message = message == null ? ParameterValidation.ImproperUseOfFrameworkExceptionMessage : message + "  " + ParameterValidation.ImproperUseOfFrameworkExceptionMessage;
             throw new InvalidOperationException(message);
         }
 

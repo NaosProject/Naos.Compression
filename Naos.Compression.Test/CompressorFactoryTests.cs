@@ -29,7 +29,7 @@ namespace Naos.Compression.Test
             // Assert
             exception.Should().NotBeNull();
             exception.Should().BeOfType<ArgumentOutOfRangeException>();
-            exception.Message.Should().Be("parameter 'compressionKind' is not equal to the comparison value, using EqualityComparer<T>.Default");
+            exception.Message.Should().Be("Parameter 'compressionKind' is equal to the comparison value using EqualityComparer<T>.Default, where T: CompressionKind.  Specified 'comparisonValue' is 'Invalid'.");
         }
 
         [Fact]

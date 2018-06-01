@@ -128,7 +128,7 @@ namespace OBeautifulCode.Validation.Recipes
             var rangeIsMalformed = CompareUsingDefaultComparer(validationParameters[0].ValueType, validationParameters[0].Value, validationParameters[1].Value) == CompareOutcome.Value1GreaterThanValue2;
             if (rangeIsMalformed)
             {
-                var malformedRangeExceptionMessage = string.Format(CultureInfo.InvariantCulture, MalformedRangeExceptionMessage, validationParameters[0].Name, validationParameters[1].Name);
+                var malformedRangeExceptionMessage = string.Format(CultureInfo.InvariantCulture, MalformedRangeExceptionMessage, validationParameters[0].Name, validationParameters[1].Name, validationParameters[0].Value?.ToString() ?? NullValueToString, validationParameters[1].Value?.ToString() ?? NullValueToString);
                 ParameterValidator.ThrowImproperUseOfFramework(malformedRangeExceptionMessage);
             }
         }
@@ -137,7 +137,11 @@ namespace OBeautifulCode.Validation.Recipes
             string parameterName,
             string because,
             bool isElementInEnumerable,
-            string exceptionMessageSuffix)
+            IReadOnlyCollection<ValidationParameter> validationParameters,
+            string exceptionMessageSuffix,
+            Type genericType = null,
+            object failingValue = null,
+            string extraInfo = null)
         {
             if (because != null)
             {
@@ -146,7 +150,11 @@ namespace OBeautifulCode.Validation.Recipes
 
             var parameterNameQualifier = parameterName == null ? string.Empty : Invariant($" '{parameterName}'");
             var enumerableQualifier = isElementInEnumerable ? " contains an element that" : string.Empty;
-            var result = Invariant($"parameter{parameterNameQualifier}{enumerableQualifier} {exceptionMessageSuffix}");
+            var genericTypeQualifier = genericType == null ? string.Empty : ", where T: " + genericType.GetFriendlyTypeName();
+            var failingValueQualifier = failingValue == null ? string.Empty : (isElementInEnumerable ? "  Element value" : "  Parameter value") + Invariant($" is '{failingValue.ToString()}'.");
+            var validationParameterQualifiers = validationParameters == null || !validationParameters.Any() ? string.Empty : validationParameters.Select(_ => Invariant($"  Specified '{_.Name}' is '{_.Value ?? NullValueToString}'.")).Aggregate((running, current) => running + current);
+            var extraInfoQualifier = extraInfo == null ? string.Empty : "  " + extraInfo;
+            var result = Invariant($"Parameter{parameterNameQualifier}{enumerableQualifier} {exceptionMessageSuffix}{genericTypeQualifier}.{failingValueQualifier}{validationParameterQualifiers}{extraInfoQualifier}");
             return result;
         }
 
