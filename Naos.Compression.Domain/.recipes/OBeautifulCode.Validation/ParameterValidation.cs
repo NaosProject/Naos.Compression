@@ -28,22 +28,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the reference type or nullable parameter is null.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeNull(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeNullInternal,
                 ValidationName = nameof(BeNull),
+                TypeValidations = MustBeNullableTypeValidations,
             };
 
-            parameter.Validate(MustBeNullableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -51,22 +55,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the reference type or nullable parameter is not null.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeNull(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeNullInternal,
                 ValidationName = nameof(NotBeNull),
+                TypeValidations = MustBeNullableTypeValidations,
             };
 
-            parameter.Validate(MustBeNullableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -74,22 +82,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the bool or bool? parameter is true.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeTrue(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeTrueInternal,
                 ValidationName = nameof(BeTrue),
+                TypeValidations = MustBeBooleanTypeValidations,
             };
 
-            parameter.Validate(MustBeBooleanTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -97,22 +109,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the bool or bool? parameter is not true.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeTrue(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeTrueInternal,
                 ValidationName = nameof(NotBeTrue),
+                TypeValidations = MustBeBooleanTypeValidations,
             };
 
-            parameter.Validate(MustBeBooleanTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -120,22 +136,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the bool or bool? parameter is false.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeFalse(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeFalseInternal,
                 ValidationName = nameof(BeFalse),
+                TypeValidations = MustBeBooleanTypeValidations,
             };
 
-            parameter.Validate(MustBeBooleanTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -143,22 +163,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the bool? or bool? parameter is not false.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeFalse(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeFalseInternal,
                 ValidationName = nameof(NotBeFalse),
+                TypeValidations = MustBeBooleanTypeValidations,
             };
 
-            parameter.Validate(MustBeBooleanTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -166,22 +190,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the string parameter is neither null nor whitespace.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeNullNorWhiteSpace(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeNullNorWhiteSpaceInternal,
                 ValidationName = nameof(NotBeNullNorWhiteSpace),
+                TypeValidations = MustBeStringTypeValidations,
             };
 
-            parameter.Validate(MustBeStringTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -189,22 +217,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the guid or guid? parameter is empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeEmptyGuid(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeEmptyGuidInternal,
                 ValidationName = nameof(BeEmptyGuid),
+                TypeValidations = MustBeGuidTypeValidations,
             };
 
-            parameter.Validate(MustBeGuidTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -212,22 +244,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the guid or guid? parameter is not empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeEmptyGuid(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeEmptyGuidInternal,
                 ValidationName = nameof(NotBeEmptyGuid),
+                TypeValidations = MustBeGuidTypeValidations,
             };
 
-            parameter.Validate(MustBeGuidTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -235,22 +271,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the string parameter is empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeEmptyString(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeEmptyStringInternal,
                 ValidationName = nameof(BeEmptyString),
+                TypeValidations = MustBeStringTypeValidations,
             };
 
-            parameter.Validate(MustBeStringTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -258,22 +298,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the string parameter is not empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeEmptyString(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeEmptyStringInternal,
                 ValidationName = nameof(NotBeEmptyString),
+                TypeValidations = MustBeStringTypeValidations,
             };
 
-            parameter.Validate(MustBeStringTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -281,22 +325,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the IEnumerable parameter is empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeEmptyEnumerable(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeEmptyEnumerableInternal,
                 ValidationName = nameof(BeEmptyEnumerable),
+                TypeValidations = MustBeEnumerableTypeValidations,
             };
 
-            parameter.Validate(MustBeEnumerableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -304,22 +352,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the IEnumerable parameter is not empty.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeEmptyEnumerable(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeEmptyEnumerableInternal,
                 ValidationName = nameof(NotBeEmptyEnumerable),
+                TypeValidations = MustBeEnumerableTypeValidations,
             };
 
-            parameter.Validate(MustBeEnumerableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -327,22 +379,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the IEnumerable parameter contains at least one null element.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter ContainSomeNulls(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = ContainSomeNullsInternal,
                 ValidationName = nameof(ContainSomeNulls),
+                TypeValidations = MustBeEnumerableOfNullableTypeValidations,
             };
 
-            parameter.Validate(MustBeEnumerableOfNullableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -350,22 +406,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the IEnumerable parameter does not contain any null elements.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotContainAnyNulls(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotContainAnyNullsInternal,
                 ValidationName = nameof(NotContainAnyNulls),
+                TypeValidations = MustBeEnumerableOfNullableTypeValidations,
             };
 
-            parameter.Validate(MustBeEnumerableOfNullableTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -373,32 +433,37 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the IEnumerable parameter is not null nor empty nor contains any null elements.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeNullNorEmptyNorContainAnyNulls(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
             var validationName = nameof(NotBeNullNorEmptyNorContainAnyNulls);
 
-            var valueValidation1 = new ValueValidation
+            var validation1 = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeEmptyEnumerableInternal,
                 ValidationName = validationName,
+                TypeValidations = MustBeEnumerableOfNullableTypeValidations,
             };
 
-            var valueValidation2 = new ValueValidation
+            var validation2 = new Validation
             {
                 Because = because,
                 ValueValidationHandler = NotContainAnyNullsInternal,
                 ValidationName = validationName,
+                TypeValidations = null,
             };
 
-            parameter.Validate(MustBeEnumerableOfNullableTypeValidations, valueValidation1);
-            parameter.Validate(null, valueValidation2);
+            parameter.Validate(validation1);
+            parameter.Validate(validation2);
 
             return parameter;
         }
@@ -407,22 +472,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the parameter is equal to default(T).
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeDefault(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeDefaultInternal,
                 ValidationName = nameof(BeDefault),
+                TypeValidations = null,
             };
 
-            parameter.Validate(null, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -430,22 +499,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Validates that the parameter is not equal to default(T).
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeDefault(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeDefaultInternal,
                 ValidationName = nameof(NotBeDefault),
+                TypeValidations = null,
             };
 
-            parameter.Validate(null, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -455,18 +528,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeLessThan<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeLessThanInternal,
                 ValidationName = nameof(BeLessThan),
                 ValidationParameters = new[]
@@ -478,9 +554,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -490,18 +567,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeLessThan<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeLessThanInternal,
                 ValidationName = nameof(NotBeLessThan),
                 ValidationParameters = new[]
@@ -513,9 +593,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -525,18 +606,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeGreaterThan<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeGreaterThanInternal,
                 ValidationName = nameof(BeGreaterThan),
                 ValidationParameters = new[]
@@ -548,9 +632,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -560,18 +645,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeGreaterThan<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeGreaterThanInternal,
                 ValidationName = nameof(NotBeGreaterThan),
                 ValidationParameters = new[]
@@ -583,9 +671,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -595,18 +684,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeLessThanOrEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeLessThanOrEqualToInternal,
                 ValidationName = nameof(BeLessThanOrEqualTo),
                 ValidationParameters = new[]
@@ -618,9 +710,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -630,18 +723,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeLessThanOrEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeLessThanOrEqualToInternal,
                 ValidationName = nameof(NotBeLessThanOrEqualTo),
                 ValidationParameters = new[]
@@ -653,9 +749,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -665,18 +762,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeGreaterThanOrEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeGreaterThanOrEqualToInternal,
                 ValidationName = nameof(BeGreaterThanOrEqualTo),
                 ValidationParameters = new[]
@@ -688,9 +788,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -700,18 +801,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeGreaterThanOrEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeGreaterThanOrEqualToInternal,
                 ValidationName = nameof(NotBeGreaterThanOrEqualTo),
                 ValidationParameters = new[]
@@ -723,9 +827,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -735,18 +840,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeEqualToInternal,
                 ValidationName = nameof(BeEqualTo),
                 ValidationParameters = new[]
@@ -758,9 +866,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = EqualsTypeValidations,
             };
 
-            parameter.Validate(EqualsTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -770,18 +879,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="comparisonValue">The value to compare the parameter value to.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotBeEqualTo<T>(
             [ValidatedNotNull] this Parameter parameter,
             T comparisonValue,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeEqualToInternal,
                 ValidationName = nameof(NotBeEqualTo),
                 ValidationParameters = new[]
@@ -793,9 +905,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = EqualsTypeValidations,
             };
 
-            parameter.Validate(EqualsTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -807,7 +920,8 @@ namespace OBeautifulCode.Validation.Recipes
         /// <param name="minimum">The minimum comparison value (start of the range).</param>
         /// <param name="maximum">The maximum comparison value (end of the range).</param>
         /// <param name="endpointDelineation">Optional instruction on whether the range is inclusive or exclusive of the endpoints.  Default is to include both the <paramref name="minimum"/> and <paramref name="maximum"/> in the range.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
@@ -816,16 +930,18 @@ namespace OBeautifulCode.Validation.Recipes
             T minimum,
             T maximum,
             Range endpointDelineation = Range.IncludesMinimumAndMaximum,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
             if (endpointDelineation != Range.IncludesMinimumAndMaximum)
             {
                 throw new NotImplementedException("This endpoint delineation is not yet implemented: " + endpointDelineation);
             }
 
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = BeInRangeInternal,
                 ValidationName = nameof(BeInRange),
                 ValidationParameters = new[]
@@ -843,9 +959,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -857,7 +974,8 @@ namespace OBeautifulCode.Validation.Recipes
         /// <param name="minimum">The minimum comparison value (start of the range).</param>
         /// <param name="maximum">The maximum comparison value (end of the range).</param>
         /// <param name="endpointDelineation">Optional instruction on whether the range is inclusive or exclusive of the endpoints.  Default is to include both the <paramref name="minimum"/> and <paramref name="maximum"/> in the range.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
@@ -866,16 +984,18 @@ namespace OBeautifulCode.Validation.Recipes
             T minimum,
             T maximum,
             Range endpointDelineation = Range.IncludesMinimumAndMaximum,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
             if (endpointDelineation != Range.IncludesMinimumAndMaximum)
             {
                 throw new NotImplementedException("This endpoint delineation is not yet implemented: " + endpointDelineation + ".");
             }
 
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotBeInRangeInternal,
                 ValidationName = nameof(NotBeInRange),
                 ValidationParameters = new[]
@@ -893,9 +1013,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = InequalityTypeValidations,
             };
 
-            parameter.Validate(InequalityTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -905,18 +1026,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="itemToSearchFor">The item to search for.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter Contain<T>(
             [ValidatedNotNull] this Parameter parameter,
             T itemToSearchFor,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = ContainInternal,
                 ValidationName = nameof(Contain),
                 ValidationParameters = new[]
@@ -928,9 +1052,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = ContainmentTypeValidations,
             };
 
-            parameter.Validate(ContainmentTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -940,18 +1065,21 @@ namespace OBeautifulCode.Validation.Recipes
         /// <typeparam name="T">The type of the comparison value.</typeparam>
         /// <param name="parameter">The parameter to validate.</param>
         /// <param name="itemToSearchFor">The item to search for.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter NotContain<T>(
             [ValidatedNotNull] this Parameter parameter,
             T itemToSearchFor,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = NotContainInternal,
                 ValidationName = nameof(NotContain),
                 ValidationParameters = new[]
@@ -963,9 +1091,10 @@ namespace OBeautifulCode.Validation.Recipes
                         ValueType = typeof(T),
                     },
                 },
+                TypeValidations = ContainmentTypeValidations,
             };
 
-            parameter.Validate(ContainmentTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
 
@@ -973,22 +1102,26 @@ namespace OBeautifulCode.Validation.Recipes
         /// Always throws.
         /// </summary>
         /// <param name="parameter">The parameter to validate.</param>
-        /// <param name="because">Optional rationale for the validation.  Replaces the default exception message constructed by this validation.</param>
+        /// <param name="because">Optional rationale for the validation, used in the exception message if the parameter fails this validation.  The default is use the framework-generated exception message as-is.</param>
+        /// <param name="applyBecause">Optional value that determines how to apply the <paramref name="because"/>, when specified.  The default is to prefix the framework-generated exception message with <paramref name="because"/>.</param>
         /// <returns>
         /// The validated parameter.
         /// </returns>
         public static Parameter BeOfTypeThatDoesNotExist(
             [ValidatedNotNull] this Parameter parameter,
-            string because = null)
+            string because = null,
+            ApplyBecause applyBecause = ApplyBecause.PrefixedToDefaultMessage)
         {
-            var valueValidation = new ValueValidation
+            var validation = new Validation
             {
                 Because = because,
+                ApplyBecause = applyBecause,
                 ValueValidationHandler = null,
                 ValidationName = nameof(BeOfTypeThatDoesNotExist),
+                TypeValidations = AlwaysThrowTypeValidations,
             };
 
-            parameter.Validate(AlwaysThrowTypeValidations, valueValidation);
+            parameter.Validate(validation);
             return parameter;
         }
     }

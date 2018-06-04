@@ -12,6 +12,9 @@ namespace OBeautifulCode.Validation.Recipes
     /// <summary>
     /// Contains all validations that can be applied to a <see cref="Parameter"/>.
     /// </summary>
+    /// <remarks>
+    /// <see cref="BuildArgumentExceptionMessage"/> has some strings in code.
+    /// </remarks>
 #if !OBeautifulCodeValidationRecipesProject
     internal
 #else

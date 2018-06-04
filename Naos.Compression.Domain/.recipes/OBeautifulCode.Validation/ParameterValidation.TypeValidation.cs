@@ -27,9 +27,9 @@ namespace OBeautifulCode.Validation.Recipes
         static partial class ParameterValidation
     {
 #pragma warning disable SA1201
-        private delegate void TypeValidationHandler(string validationName, bool isElementInEnumerable, Type valueType, Type[] referenceTypes, ValidationParameter[] validationParameters);
-
-        private static readonly Type EnumerableType = typeof(IEnumerable);
+        private delegate void TypeValidationHandler(
+            Validation validation,
+            TypeValidation typeValidation);
 
         private static readonly Type UnboundGenericEnumerableType = typeof(IEnumerable<>);
 
@@ -139,68 +139,62 @@ namespace OBeautifulCode.Validation.Recipes
 
         // ReSharper disable once UnusedParameter.Local
         private static void Throw(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] referenceTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
-            var parameterValueTypeName = valueType.GetFriendlyTypeName();
-            throw new InvalidCastException(Invariant($"validationName: {validationName}, isElementInEnumerable: {isElementInEnumerable}, parameterValueTypeName: {parameterValueTypeName}"));
+            var parameterValueTypeName = validation.ValueType.GetFriendlyTypeName();
+            throw new InvalidCastException(Invariant($"validationName: {validation.ValidationName}, isElementInEnumerable: {validation.IsElementInEnumerable}, parameterValueTypeName: {parameterValueTypeName}"));
         }
 
         // ReSharper disable once UnusedParameter.Local
         private static void ThrowIfTypeCannotBeNull(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] referenceTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
+            var valueType = validation.ValueType;
+
             if (valueType.IsValueType && (Nullable.GetUnderlyingType(valueType) == null))
             {
-                ThrowParameterUnexpectedType(validationName, valueType, isElementInEnumerable, AnyReferenceTypeName, NullableGenericTypeName);
+                ThrowParameterUnexpectedType(validation, AnyReferenceTypeName, NullableGenericTypeName);
             }
         }
 
         // ReSharper disable once UnusedParameter.Local
         private static void ThrowIfEnumerableTypeCannotBeNull(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] referenceTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
+            var valueType = validation.ValueType;
+
             var enumerableType = GetEnumerableGenericType(valueType);
 
             if (enumerableType.IsValueType && (Nullable.GetUnderlyingType(enumerableType) == null))
             {
-                ThrowParameterUnexpectedType(validationName, valueType, isElementInEnumerable, nameof(IEnumerable), EnumerableOfAnyReferenceTypeName, EnumerableOfNullableGenericTypeName);
+                ThrowParameterUnexpectedType(validation, nameof(IEnumerable), EnumerableOfAnyReferenceTypeName, EnumerableOfNullableGenericTypeName);
             }
         }
 
         // ReSharper disable once UnusedParameter.Local
         private static void ThrowIfNotOfType(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] validTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
+            var valueType = validation.ValueType;
+            var validTypes = typeValidation.ReferenceTypes;
+
             if ((!validTypes.Contains(valueType)) && (!validTypes.Any(_ => _.IsAssignableFrom(valueType))))
             {
-                ThrowParameterUnexpectedType(validationName, valueType, isElementInEnumerable, validTypes);
+                ThrowParameterUnexpectedType(validation, validTypes);
             }
         }
 
         // ReSharper disable once UnusedParameter.Local
         private static void ThrowIfNotComparable(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] referenceTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
+            var valueType = validation.ValueType;
+
             // type is nullable
             if (Nullable.GetUnderlyingType(valueType) == null)
             {
@@ -217,7 +211,7 @@ namespace OBeautifulCode.Validation.Recipes
                             // note that, for completeness, we should recurse through all interface implementations
                             // and check whether any of those are IComparable<>
                             // see: https://stackoverflow.com/questions/5461295/using-isassignablefrom-with-open-generic-types
-                            ThrowParameterUnexpectedType(validationName, valueType, isElementInEnumerable, nameof(IComparable), ComparableGenericTypeName, NullableGenericTypeName);
+                            ThrowParameterUnexpectedType(validation, nameof(IComparable), ComparableGenericTypeName, NullableGenericTypeName);
                         }
                     }
                 }
@@ -226,55 +220,51 @@ namespace OBeautifulCode.Validation.Recipes
 
         // ReSharper disable once UnusedParameter.Local
         private static void ThrowIfAnyValidationParameterTypeDoesNotEqualValueType(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] validTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
-            foreach (var validationParameter in validationParameters)
+            var valueType = validation.ValueType;
+
+            foreach (var validationParameter in validation.ValidationParameters)
             {
                 if (validationParameter.ValueType != valueType)
                 {
-                    ThrowValidationParameterUnexpectedType(validationName, validationParameter.ValueType, validationParameter.Name, valueType);
+                    ThrowValidationParameterUnexpectedType(validation.ValidationName, validationParameter.ValueType, validationParameter.Name, valueType);
                 }
             }
         }
 
         private static void ThrowIfAnyValidationParameterTypeDoesNotEqualEnumerableValueType(
-            string validationName,
-            bool isElementInEnumerable,
-            Type valueType,
-            Type[] validTypes,
-            ValidationParameter[] validationParameters)
+            Validation validation,
+            TypeValidation typeValidation)
         {
-            var enumerableType = GetEnumerableGenericType(valueType);
+            var enumerableType = GetEnumerableGenericType(validation.ValueType);
 
-            foreach (var validationParameter in validationParameters)
+            foreach (var validationParameter in validation.ValidationParameters)
             {
                 if (validationParameter.ValueType != enumerableType)
                 {
-                    ThrowValidationParameterUnexpectedType(validationName, validationParameter.ValueType, validationParameter.Name, enumerableType);
+                    ThrowValidationParameterUnexpectedType(validation.ValidationName, validationParameter.ValueType, validationParameter.Name, enumerableType);
                 }
             }
         }
 
         private static void ThrowParameterUnexpectedType(
-            string validationName,
-            Type valueType,
-            bool isElementInEnumerable,
+            Validation validation,
             params Type[] expectedTypes)
         {
             var expectedTypeStrings = expectedTypes.Select(_ => _.GetFriendlyTypeName()).ToArray();
-            ThrowParameterUnexpectedType(validationName, valueType, isElementInEnumerable, expectedTypeStrings);
+            ThrowParameterUnexpectedType(validation, expectedTypeStrings);
         }
 
         private static void ThrowParameterUnexpectedType(
-            string validationName,
-            Type valueType,
-            bool isElementInEnumerable,
+            Validation validation,
             params string[] expectedTypes)
         {
+            var valueType = validation.ValueType;
+            var validationName = validation.ValidationName;
+            var isElementInEnumerable = validation.IsElementInEnumerable;
+
             var expectedTypesMessage = expectedTypes.Select(_ => isElementInEnumerable ? Invariant($"IEnumerable<{_}>") : _).Aggregate((running, item) => running + ", " + item);
             var valueTypeMessage = isElementInEnumerable ? Invariant($"IEnumerable<{valueType.GetFriendlyTypeName()}>") : valueType.GetFriendlyTypeName();
             var exceptionMessage = Invariant($"Called {validationName}() on a parameter of type {valueTypeMessage}, which is not one of the following expected type(s): {expectedTypesMessage}.");
