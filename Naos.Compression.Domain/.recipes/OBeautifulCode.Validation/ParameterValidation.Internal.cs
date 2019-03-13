@@ -11,6 +11,8 @@ namespace OBeautifulCode.Validation.Recipes
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Contains all validations that can be applied to a <see cref="Parameter"/>.
@@ -22,6 +24,10 @@ namespace OBeautifulCode.Validation.Recipes
 #endif
         static partial class ParameterValidation
     {
+        private static readonly Regex NotAlphaNumericRegex = new Regex("[^a-zA-Z0-9]", RegexOptions.Compiled);
+
+        private static readonly Regex IsAlphaNumericRegex = new Regex("[a-zA-Z0-9]", RegexOptions.Compiled);
+
         private delegate void ValueValidationHandler(
             Validation validation);
 
@@ -31,7 +37,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (!ReferenceEquals(validation.Value, null))
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeNullExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -41,13 +50,18 @@ namespace OBeautifulCode.Validation.Recipes
             if (ReferenceEquals(validation.Value, null))
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeNullExceptionMessageSuffix);
+
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentNullException(null, exceptionMessage);
+                    var exception = new ArgumentNullException(null, exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -59,7 +73,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeTrueExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -70,7 +87,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (!shouldNotThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeTrueExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -81,7 +101,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeFalseExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -92,7 +115,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (!shouldNotThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeFalseExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -105,7 +131,24 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeNullNorWhiteSpaceExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void BeNullOrNotWhiteSpaceInternal(
+            Validation validation)
+        {
+            var shouldThrow = !ReferenceEquals(validation.Value, null) && string.IsNullOrWhiteSpace((string)validation.Value);
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, BeNullOrNotWhiteSpaceExceptionMessageSuffix, Include.FailingValue);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -116,7 +159,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeEmptyGuidExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -127,7 +173,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeEmptyGuidExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -140,7 +189,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeEmptyStringExceptionMessageSuffix, Include.FailingValue);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -153,7 +205,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeEmptyStringExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -176,7 +231,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeEmptyEnumerableExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -199,11 +257,54 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeEmptyEnumerableExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
-        private static void ContainSomeNullsInternal(
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unused", Justification = "Cannot iterate without a local")]
+        private static void BeEmptyDictionaryInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var valueAsDictionary = validation.Value as IDictionary;
+
+            // ReSharper disable once PossibleNullReferenceException
+            var shouldThrow = valueAsDictionary.Count != 0;
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, BeEmptyDictionaryExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unused", Justification = "Cannot iterate without a local")]
+        private static void NotBeEmptyDictionaryInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var valueAsDictionary = validation.Value as IDictionary;
+
+            // ReSharper disable once PossibleNullReferenceException
+            var shouldThrow = valueAsDictionary.Count == 0;
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeEmptyDictionaryExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void ContainSomeNullElementsInternal(
             Validation validation)
         {
             NotBeNullInternal(validation);
@@ -223,12 +324,15 @@ namespace OBeautifulCode.Validation.Recipes
 
             if (shouldThrow)
             {
-                var exceptionMessage = BuildArgumentExceptionMessage(validation, ContainSomeNullsExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, ContainSomeNullElementsExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
-        private static void NotContainAnyNullsInternal(
+        private static void NotContainAnyNullElementsInternal(
             Validation validation)
         {
             NotBeNullInternal(validation);
@@ -248,8 +352,67 @@ namespace OBeautifulCode.Validation.Recipes
 
             if (shouldThrow)
             {
-                var exceptionMessage = BuildArgumentExceptionMessage(validation, NotContainAnyNullsExceptionMessageSuffix);
-                throw new ArgumentException(exceptionMessage);
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, NotContainAnyNullElementsExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void ContainSomeKeyValuePairsWithNullValueInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var valueAsEnumerable = validation.Value as IEnumerable;
+            var shouldThrow = true;
+
+            // ReSharper disable once PossibleNullReferenceException
+            foreach (var keyValuePair in valueAsEnumerable)
+            {
+                if (ReferenceEquals(((dynamic)keyValuePair).Value, null))
+                {
+                    shouldThrow = false;
+                    break;
+                }
+            }
+
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, ContainSomeKeyValuePairsWithNullValueExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void NotContainAnyKeyValuePairsWithNullValueInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var valueAsEnumerable = validation.Value as IEnumerable;
+            var shouldThrow = false;
+
+            // ReSharper disable once PossibleNullReferenceException
+            foreach (var keyValuePair in valueAsEnumerable)
+            {
+                if (ReferenceEquals(((dynamic)keyValuePair).Value, null))
+                {
+                    shouldThrow = true;
+                    break;
+                }
+            }
+
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, NotContainAnyKeyValuePairsWithNullValueExceptionMessageSuffix);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -261,7 +424,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeDefaultExceptionMessageSuffix, Include.FailingValue | Include.GenericType);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -273,7 +439,10 @@ namespace OBeautifulCode.Validation.Recipes
             if (shouldThrow)
             {
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeDefaultExceptionMessageSuffix, Include.GenericType);
-                throw new ArgumentException(exceptionMessage);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
 
@@ -287,11 +456,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -306,11 +479,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -325,11 +502,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -344,11 +525,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -363,11 +548,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -382,11 +571,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -401,11 +594,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -420,11 +617,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -438,11 +639,15 @@ namespace OBeautifulCode.Validation.Recipes
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, BeEqualToExceptionMessageSuffix, Include.FailingValue | Include.GenericType);
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -456,11 +661,15 @@ namespace OBeautifulCode.Validation.Recipes
                 var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeEqualToExceptionMessageSuffix, Include.GenericType);
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -479,11 +688,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -502,11 +715,15 @@ namespace OBeautifulCode.Validation.Recipes
 
                 if (validation.IsElementInEnumerable)
                 {
-                    throw new ArgumentException(exceptionMessage);
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(exceptionMessage, (Exception)null);
+                    var exception = new ArgumentOutOfRangeException(exceptionMessage, (Exception)null).AddData(validation.Data);
+
+                    throw exception;
                 }
             }
         }
@@ -528,7 +745,10 @@ namespace OBeautifulCode.Validation.Recipes
             }
 
             var exceptionMessage = BuildArgumentExceptionMessage(validation, ContainExceptionMessageSuffix, Include.GenericType, genericTypeOverride: elementType);
-            throw new ArgumentException(exceptionMessage);
+
+            var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+            throw exception;
         }
 
         private static void NotContainInternal(
@@ -544,8 +764,104 @@ namespace OBeautifulCode.Validation.Recipes
                 if (EqualUsingDefaultEqualityComparer(elementType, element, searchForItem))
                 {
                     var exceptionMessage = BuildArgumentExceptionMessage(validation, NotContainExceptionMessageSuffix, Include.GenericType, genericTypeOverride: elementType);
-                    throw new ArgumentException(exceptionMessage);
+
+                    var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                    throw exception;
                 }
+            }
+        }
+
+        private static void BeAlphanumericInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var otherAllowedCharacters = (IReadOnlyCollection<char>)validation.ValidationParameters[0].Value;
+
+            var stringValue = (string)validation.Value;
+
+            bool shouldThrow;
+            if (otherAllowedCharacters == null)
+            {
+                shouldThrow = NotAlphaNumericRegex.IsMatch(stringValue);
+            }
+            else
+            {
+                // The approach is to remove alphanumeric characters and then iterate through the remaining
+                // characters and check if all of them are in the otherAllowedCharacters set.  If any are
+                // not then we throw.
+                // Our first approach was to augment the NotAlphaNumericRegex by adding the permitted characters
+                // to the Character Group (inside the square brackets).  However, it was not a complete solution.
+                // We did added the characters using Regex.Escape(), but that method doesn't have any context for
+                // where the characters are being placed in the regex.  So, for example, it doesn't escape the dash '-'
+                // character, which is normally fine, but within a Character Group (square brackets) it signifies a range
+                // of characters unless it's escaped.  Other escaping issues were found and as per this post
+                // there's no out-of-the-box way to escape correctly without building something specific to Character
+                // Groups: https://stackoverflow.com/a/12963197/356790.  The below approach is far easier.
+                var notAlphanumericCharacters = IsAlphaNumericRegex.Replace(stringValue, string.Empty);
+                var otherAllowedCharactersHashSet = new HashSet<char>(otherAllowedCharacters);
+
+                shouldThrow = false;
+                foreach (var notAlphanumericCharacter in notAlphanumericCharacters)
+                {
+                    if (!otherAllowedCharactersHashSet.Contains(notAlphanumericCharacter))
+                    {
+                        shouldThrow = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, BeAlphanumericExceptionMessageSuffix, Include.FailingValue);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void BeMatchedByRegexInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var regex = (Regex)validation.ValidationParameters[0].Value;
+
+            var stringValue = (string)validation.Value;
+
+            var shouldThrow = !regex.IsMatch(stringValue);
+
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, BeMatchedByRegexExceptionMessageSuffix, Include.FailingValue);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
+            }
+        }
+
+        private static void NotBeMatchedByRegexInternal(
+            Validation validation)
+        {
+            NotBeNullInternal(validation);
+
+            var regex = (Regex)validation.ValidationParameters[0].Value;
+
+            var stringValue = (string)validation.Value;
+
+            var shouldThrow = regex.IsMatch(stringValue);
+
+            if (shouldThrow)
+            {
+                var exceptionMessage = BuildArgumentExceptionMessage(validation, NotBeMatchedByRegexExceptionMessageSuffix, Include.FailingValue);
+
+                var exception = new ArgumentException(exceptionMessage).AddData(validation.Data);
+
+                throw exception;
             }
         }
     }
