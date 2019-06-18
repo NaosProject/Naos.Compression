@@ -12,7 +12,7 @@ namespace Naos.Compression.Domain
     using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
-    /// Build in dot net implementation of <see cref="ICompressAndDecompress"/>.  Implementation from: <a href="https://stackoverflow.com/questions/40909052/using-gzip-to-compress-decompress-an-array-of-bytes" />
+    /// Build in dot net implementation of <see cref="ICompressAndDecompress"/>.  Implementation from: <a href="https://stackoverflow.com/questions/40909052/using-gzip-to-compress-decompress-an-array-of-bytes" />.
     /// </summary>
     public class DotNetZipCompressor : ICompressAndDecompress
     {
